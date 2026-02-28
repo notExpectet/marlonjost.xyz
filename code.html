@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marlon Jost - Sluggish Star Trail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style type="text/tailwindcss">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      overflow: hidden;
+      margin: 0;
+      height: 100vh;
+      width: 100vw;
+      cursor: none;perspective: 1000px;
+    }a, button, [role="button"] {
+      cursor: none !important;
+    }
+    .hero-text {
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      font-size: clamp(3.5rem, 22vw, 26rem);
+      line-height: 0.85;
+    }
+    #custom-cursor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      width: 48px; 
+      height: 48px;
+    }
+    .star-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      font-size: 56px;
+      line-height: 1;
+      will-change: transform, opacity;
+      transform-style: preserve-3d;
+    }
+    @keyframes rainbow-slide {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .rainbow-hover {
+      background: linear-gradient(90deg, #000000, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3, #000000);
+      background-size: 400% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      transition: color 0.2s ease;
+    }
+    .rainbow-hover:hover {
+      color: transparent;
+      animation: rainbow-slide 3s linear infinite;
+    }
+</style>
+<style data-purpose="layout-adjustments">
+    .nav-column {
+      min-width: 150px;
+    }
+</style>
+</head>
+<body class="min-h-screen w-full bg-white flex items-center justify-start overflow-hidden m-0 p-0">
+<main class="w-full h-full flex items-center justify-start relative overflow-hidden" data-purpose="main-display">
+<div class="pl-[10%] md:pl-[12%]">
+<h2 class="hero-text select-none leading-[0.85] font-extrabold">Marlon<br/>Jost</h2>
+</div>
+<div class="fixed bottom-8 right-8 flex flex-col items-end gap-3 z-[1001]"><a class="group rainbow-hover flex items-center gap-3 text-2xl font-bold text-black no-underline transition-all duration-300 select-none hover:scale-105 cursor-none" href="mailto:mail@marlonjost.xyz" onmouseenter="isHoveringLink = true;" onmouseleave="isHoveringLink = false;" target="_blank">
+<span class="rainbow-hover">Mail</span>
+<i class="fa-solid fa-envelope text-3xl rainbow-hover"></i>
+</a>
+<a class="group rainbow-hover flex items-center gap-3 text-2xl font-bold text-black no-underline transition-all duration-300 select-none hover:scale-105 cursor-none" href="https://github.com/notExpectet" onmouseenter="isHoveringLink = true;" onmouseleave="isHoveringLink = false;" target="_blank">
+<span class="rainbow-hover">GitHub</span>
+<i class="fa-brands fa-github text-3xl rainbow-hover"></i>
+</a>
+<a class="group rainbow-hover flex items-center gap-3 text-2xl font-bold text-black no-underline transition-all duration-300 select-none hover:scale-105 cursor-none" href="https://excalidraw.com/#room=e023f554e594f1110c42,csgSwaHDCLkYlbQwJtR1Gg" onmouseenter="isHoveringLink = true;" onmouseleave="isHoveringLink = false;" target="_blank">
+<span class="rainbow-hover">Excalidraw</span>
+<i class="fa-solid fa-pen-nib text-3xl rainbow-hover"></i>
+</a>
+</div>
+</main>
+<div id="custom-cursor" style="position: fixed; pointer-events: none; z-index: 9999; width: 40px; height: 40px; transform: translate(-5%, -5%); transition: opacity 0.2s ease;">
+<img alt="Custom Cursor" class="w-full h-full object-contain" src="data:image/png;base64,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"/>
+</div>
+<script>
+  const cursor = document.getElementById('custom-cursor');
+  const body = document.body;
+  // State tracking
+  let mouseX = 0;
+  let mouseY = 0;
+  let isMoving = false;
+  let isHoveringLink = false; // Flag to stop spawning stars on links
+  let moveTimeout;
+  // Path Memory array to store cursor history
+  const pathHistory = [];
+  const maxHistory = 60; // Increased buffer slightly for smoother lag calculation
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    // Update movement state
+    isMoving = true;
+    clearTimeout(moveTimeout);
+    moveTimeout = setTimeout(() => {
+        isMoving = false;
+    }, 150); // Slightly longer timeout to allow particles to settle
+    // Move custom cursor
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+    // Update history
+    pathHistory.push({x: mouseX, y: mouseY, time: Date.now()});
+    if (pathHistory.length > maxHistory) {
+      pathHistory.shift();
+    }
+    // Spawn star occasionally - Low frequency maintained
+    // Only spawn if NOT hovering a link
+    if (!isHoveringLink && Math.random() > 0.75) { 
+      createStar(mouseX, mouseY, false);
+    }
+  });
+  // Idle star spawning loop
+  setInterval(() => {
+    if (!isMoving && !isHoveringLink) { // Check hovering flag here too so it doesn't drift when looking at link
+        // Very low frequency when idle
+        if(Math.random() > 0.7) {
+            createStar(mouseX, mouseY, true);
+        }
+    }
+  }, 150);
+  function createStar(x, y, isIdle) {
+    const colors = ['#FF00FF', '#00FFFF', '#FF007F', '#7F00FF', '#00FF00', '#FF8000', '#0080FF', '#FFD700'];
+    const star = document.createElement('div');
+    star.className = 'star-particle';
+    star.innerHTML = '★'; 
+    star.style.color = colors[Math.floor(Math.random() * colors.length)];
+    // Center the star relative to cursor tip
+    star.style.left = (x - 20) + 'px'; 
+    star.style.top = (y - 30) + 'px';
+    body.appendChild(star);
+    let deltaX, deltaY;
+    let durationBase;
+    // Modified easing for viscous feel: starts slow, accelerates slightly, then decelerates
+    let easingCurve = 'cubic-bezier(0.4, 0.0, 0.2, 1)'; 
+    if (isIdle) {
+        // IDLE LOGIC: Burst outwards slowly like honey
+        const angle = Math.random() * Math.PI * 2;
+        // Shorter distance, slower movement for viscosity
+        const distance = 30 + Math.random() * 60;
+        deltaX = Math.cos(angle) * distance;
+        deltaY = Math.sin(angle) * distance;
+        durationBase = 2500; // Significantly slower (2.5s base)
+    } else {
+        // PATH LOGIC: Lag behind cursor heavily
+        let targetX = x;
+        let targetY = y;
+        const now = Date.now();
+        // Look further back in history (600ms+) for that heavy "tow" feel
+        const pastPoint = pathHistory.find(p => now - p.time > 600); 
+        if (pastPoint) {
+          targetX = pastPoint.x;
+          targetY = pastPoint.y;
+        } else if (pathHistory.length > 0) {
+            targetX = pathHistory[0].x;
+            targetY = pathHistory[0].y;
+        } else {
+            targetX = x;
+            targetY = y;
+        }
+        // Calculate vector to past point
+        deltaX = targetX - x;
+        deltaY = targetY - y;
+        // Add a little randomness to the path drift so it feels like floating particles
+        deltaX += (Math.random() - 0.5) * 40;
+        deltaY += (Math.random() - 0.5) * 40;
+        durationBase = 1800; // Slower trail (1.8s base)
+    }
+    // Initial random rotation
+    const initialRotateZ = Math.random() * 360;
+    // Gentle 3D tilt deltas
+    const rotateX = (Math.random() - 0.5) * 90; 
+    const rotateY = (Math.random() - 0.5) * 90;
+    const rotateZDelta = (Math.random() - 0.5) * 45;
+    // Animate
+    const animation = star.animate([
+      { 
+        transform: `translate3d(0,0,0) rotateX(0deg) rotateY(0deg) rotateZ(${initialRotateZ}deg) scale(1)`, 
+        opacity: 1 
+      },
+      { 
+        transform: `translate3d(${deltaX}px, ${deltaY}px, -100px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${initialRotateZ + rotateZDelta}deg) scale(0.6)`, 
+        opacity: 0 
+      }
+    ], {
+      duration: durationBase + Math.random() * 800, 
+      easing: easingCurve,
+      fill: 'forwards'
+    });
+    animation.onfinish = () => {
+      star.remove();
+    };
+  }
+</script>
+</body></html>
