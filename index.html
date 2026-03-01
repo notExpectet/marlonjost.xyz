@@ -78,7 +78,7 @@
 <span class="rainbow-hover">GitHub</span>
 <i class="fa-brands fa-github text-3xl rainbow-hover"></i>
 </a>
-<a class="group rainbow-hover flex items-center gap-3 text-2xl font-bold text-black no-underline transition-all duration-300 select-none hover:scale-105 cursor-none" href="https://excalidraw.com/#room=e023f554e594f1110c42,csgSwaHDCLkYlbQwJtR1Gg" onmouseenter="isHoveringLink = true;" onmouseleave="isHoveringLink = false;" target="_blank">
+<a class="group rainbow-hover flex items-center gap-3 text-2xl font-bold text-black no-underline transition-all duration-300 select-none hover:scale-105 cursor-none" href="javascript:void(0)" onclick="openProtectedExcalidraw(event)" onmouseenter="isHoveringLink = true;" onmouseleave="isHoveringLink = false;">
 <span class="rainbow-hover">Excalidraw</span>
 <i class="fa-solid fa-pen-nib text-3xl rainbow-hover"></i>
 </a>
@@ -202,6 +202,15 @@
     animation.onfinish = () => {
       star.remove();
     };
+  }
+  function openProtectedExcalidraw(event) {
+    event.preventDefault();
+    const password = prompt("Passwort eingeben:");
+    if (password === "123") {
+      window.open("https://excalidraw.com/#room=e023f554e594f1110c42,csgSwaHDCLkYlbQwJtR1Gg", "_blank");
+    } else if (password !== null) {
+      alert("Falsches Passwort.");
+    }
   }
 </script>
 </body></html>
